@@ -1,13 +1,11 @@
 {
   "name": "deepl-scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "DeepL scraper API using playwright",
   "scripts": {
-    "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "start": "func start"
   },
   "dependencies": {
     "playwright-chromium": "1.21.1"
-  },
-  "devDependencies": {}
+  }
 }
