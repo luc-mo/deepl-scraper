@@ -1,14 +1,16 @@
-const { chromium } = require('playwright-chromium')
+import { chromium } from 'playwright-chromium'
 
-module.exports = async function(ctx, req) {
+(async() => {
     try {
-        const { text, from = 'en', to = 'es' } = req.body
+        const text = 'Hello World'
+        const from = 'en'
+        const to = 'es'
         const targetDummyDiv = '#target-dummydiv'
-
+    
         const urlText = text.replace(' ', '%20')
         const url = `https://deepl.com/es/translator#${from}/${to}/${urlText}`
-
-        const browser = await chromium.launch()
+    
+        const browser = await chromium.launch({ headless: false })
         const page = await browser.newPage()
         await page.goto(url)
         
@@ -16,17 +18,11 @@ module.exports = async function(ctx, req) {
         while(translatedText === '\r\n') {
             translatedText = await page.textContent(targetDummyDiv)
         }
-
+    
         await browser.close()
         const translation = translatedText.replace('\r\n', '')
-        ctx.res = {
-            headers: { 'Content-Type': 'application/json' },
-            body: { translation }
-        }
+        console.log(translation)
     } catch(error) {
-        ctx.res = {
-            headers: { 'Content-Type': 'application/json' },
-            body: { error }
-        }
+        console.log(error)
     }
-}
+})()
